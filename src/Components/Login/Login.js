@@ -10,14 +10,19 @@ export class Login extends React.Component{
         this.state={
             user:'',
             pass: '',
+            showPass: 'password',
             usuarios: {},
-            contraseñas: {}
+            contraseñas: {},
+            bloqueado: {},
+            contBloq: 0,
+            test: false,
         }
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
         this.handleChangeUser = this.handleChangeUser.bind(this);
         this.handleChangePass = this.handleChangePass.bind(this);
         this.loginForAccount = this.loginForAccount.bind(this);
+        this.myFunction = this.myFunction.bind(this);
     }
 
     handleChangeUser=e=>{
@@ -48,21 +53,18 @@ export class Login extends React.Component{
             this.setState({
                 usuarios: doc.docs.map(elements=>elements.id)
             })
-            /*doc.docs.map(elements=>
-                this.setState({
-                    usuarios: [elements.id]
-                })*/
-            //)
         )
-        setTimeout(this.getContraseñas,1000)
-        setTimeout(this.consola,1500)
+        setTimeout(this.getContraseñas,1500)
+        setTimeout(this.getBloqueados,1500)
+        setTimeout(this.consola,2000)
     }
 
     consola=()=>{
         console.log(this.state.usuarios)
         console.log(this.state.contraseñas)
+        console.log(this.state.bloqueado)
     }
-    
+
     getContraseñas=()=>{
         let cont = 0;
         let pass=[];
@@ -78,6 +80,21 @@ export class Login extends React.Component{
         })
     }
 
+    getBloqueados=()=>{
+        let cont = 0;
+        let bloq = [];
+        while(cont<this.state.usuarios.length){
+            myFirestore.collection('users').doc(`${this.state.usuarios[cont]}`).get()
+            .then(doc=>
+                bloq.push(doc.data().bloq)
+            )
+            cont++;
+        }
+        this.setState({
+            bloqueado: bloq
+        })
+    }
+
     login(){    
         let provider = new firebase.auth.GoogleAuthProvider()
         firebase.auth().signInWithPopup(provider)
@@ -86,9 +103,9 @@ export class Login extends React.Component{
     }
 
     logout(){
-        /*firebase.auth().signOut()
+        firebase.auth().signOut()
         .then(result=>alert(`Cerro sesion`))
-        .catch(error=>alert(`Error: ${error.code}: ${error.message}`))*/
+        .catch(error=>alert(`Error: ${error.code}: ${error.message}`))
         this.setState({
             user:'',
             pass: '',
@@ -101,55 +118,44 @@ export class Login extends React.Component{
         let cont = 0;
         let flag = 0;
         while(cont < this.state.usuarios.length){
-            console.log(cont)
             if(this.state.usuarios[cont]===this.state.user){
-                if(this.state.contraseñas[cont]===this.state.pass){
-                    flag = 1
-                    console.log(flag+"cambio")
-                    break
+                //
+                if(this.state.bloqueado[cont]){
+                    alert("Usuario Bloqueado: Contacte con el administrador")
+                }else{
+                    if(this.state.contraseñas[cont]===this.state.pass){
+                        flag = 1
+                        //console.log(flag+"cambio")
+                        break
+                    }else{
+                        if(this.state.contBloq===3){
+                            alert(`El usuario ${this.state.user} fue bloqueado`)
+                            //  Bloquear al usuario
+                            myFirestore.collection("users").doc(`${this.state.user}`)
+                            .update({
+                                bloq: true
+                            }); 
+                            setTimeout(this.getBloqueados,1500)
+                            break
+                        }else{
+                            this.setState({contBloq: this.state.contBloq + 1 })
+                        }
+                    }
                 }
+                //
             }
             cont ++
         }
-        console.log(flag+"bandera")
         if(flag===1){
-            alert("El usuario existe")
+            localStorage.setItem("User",`${this.state.user}`);
+            this.setState({test: true})
+            console.log(this.state.login)
+            alert("Usuario Correcto")
         }else{
             alert("usuarios incorrecto")
+            console.log(this.state.login)
         }
     }
-
-    /*getUserId=()=>{ //Verifica la base de datos si existe el usuario
-        console.log("111")
-        myFirestore.collection('users').get()
-        .then(doc=>doc.docs
-            .map(key=>   //  key.id
-        key.id===this.state.user?this.setState({flag: 1}):''))  // Realiza la busqueda del "usuario"
-        .then(this.getUserPass) //  -----   Metodo validar contraseña----
-        .then(this.initialize)
-    }
-    
-    getUserPass=()=>{
-        console.log("222")
-        console.log("bandera "+this.state.flag)
-        if(this.state.flag===1){     //  Valida la contraseña
-        myFirestore.collection('users').doc(`${this.state.user}`).get()
-        .then(doc=>doc.data().password===this.state.pass?this.setState({exist: 1}):'')//console.log(doc.data().password))
-        }else{
-            this.setState({exist: false});
-            console.log("Usuario no existe")
-        }
-    }
-
-    initialize=()=>{
-        console.log("333")
-        console.log("existe "+this.state.exist)
-        if(this.state.exist===1){
-            console.log("Inicio Session")
-        }else{
-            console.log("Datos incorrectos")
-        }
-    }*/
 
     writeData(userId, name, email, imageUrl){
         localStorage.setItem("id", userId);
@@ -164,41 +170,55 @@ export class Login extends React.Component{
         })
     }
 
+    myFunction(){
+        if (this.state.showPass === "password") {
+            this.setState({showPass:'text'})
+        } else {
+            this.setState({showPass:'password'})
+        }
+    }
+
     render(){
         return(
-            <div class="row">                
-                <div class="col-lg-4"></div>
-                <div class="col-lg-4">
-                    <div class="main-login">
-                        <form class="form">
-                            <h1 class="text-center">Welcome</h1>	
-                            <label>User:</label>
+            <div className="row">                
+                <div className="col-lg-4"></div>
+                <div className="col-lg-4">
+                    <div className="main-login">
+                        <form className="form" onSubmit={this.loginForAccount} action={this.state.test?'/biblioteca/Main':'/biblioteca'}>
+                            <h1 className="text-center">Welcome</h1>	
+                            <label id="valForm">User:</label>
                             <input 
                                 type="text" 
                                 autoComplete="off" 
                                 value={this.state.user}
                                 onChange={this.handleChangeUser}
-                                class="form-control" 
+                                className="form-control" 
                                 placeholder="User" 
                                 required/>
-                            <label>Password:</label>
+                            <label id="valForm">Password:</label>
                             <input 
-                                type="password" 
+                                type={`${this.state.showPass}`} 
                                 value={this.state.pass}
                                 onChange={this.handleChangePass}
-                                class="form-control" 
+                                className="form-control pwd" 
                                 placeholder="Password" 
+                                id="myInput"
                                 required/>
-                            <br/>
-                            <Link class="btn btn-primary btn-lg btn-block" onClick={this.loginForAccount} type="submit">log in</Link>
-                            <Link class="btn loginBtn loginBtn--google" id="login" onClick={this.login}>
+                            <input 
+                                type="checkbox" 
+                                onClick={this.myFunction} 
+                                id="showPassword"/>
+                            <label for="showPassword" id="show">Show Password</label>
+                            <button href={`${this.state.login}`} className="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+                            <Link className="btn loginBtn loginBtn--google" id="login" onClick={this.login}>
                                 Sign in with Google
                             </Link>
                             <Link onClick={this.logout}>Logout</Link>
+                            <Link to="/biblioteca/create-account">Create account</Link>
                         </form>
                     </div>
                 </div>
-                <div class="col-lg-4"></div>
+                <div className="col-lg-4"></div>
             </div>
         )
     }

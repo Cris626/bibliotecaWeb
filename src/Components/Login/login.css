@@ -19,7 +19,7 @@
     background-color: #B3D1CA;
     padding: 25px;
   }
-  label{
+  label#valForm{
     font-size: 1.5em;
   }
   .loginBtn:before {
@@ -47,4 +47,8 @@
   .loginBtn--google:hover,
   .loginBtn--google:focus {
     background: #E74B37;
+  }
+
+  #showPassword{
+    margin-top: 15px;
   }
