@@ -2,15 +2,18 @@ import React from 'react';
 import firebase from 'firebase';
 import { Link } from "react-router-dom";
 
+
 export class Main extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            user: localStorage.getItem('User')
+            user: localStorage.getItem('User')            
         }
-        this.logout = this.logout.bind(this)
+        this.logout = this.logout.bind(this);
+        this.exists = this.exists.bind(this);
+        this.noExists = this.noExists.bind(this);
     }
-
+    
     logout(){
         firebase.auth().signOut()
         .then(result=>alert(`Cerro sesion`))
@@ -21,14 +24,34 @@ export class Main extends React.Component{
         localStorage.clear();
     }
 
+    noExists(){
+        return(
+            <h1>Page not found</h1>
+        )
+    }
+
+    exists(){
+        return(
+            <div className="row">
+                <div className="col-lg-3"></div>
+                <div className="col-lg-6">
+                    <form>
+                        <h1 className="text-center" >Menu Principal</h1>
+                        <h2 className="text-center" >Welcome {this.state.user}</h2>
+                        <Link to="/biblioteca/Main/user-edit" className="btn btn-primary btn-lg btn-block">Editar Datos</Link>
+                        <Link id="x" to='/biblioteca' onClick={this.logout}>Cerrar Session</Link>    
+                    </form>
+                </div>
+                <div className="col-lg-3"></div>
+            </div>
+        )
+    }
+
     render(){
         return (
             <div>
-                <h1>Menu Principal</h1>
-                <h2>Welcome {this.state.user}</h2>
-                <Link to='/biblioteca' onClick={this.logout}>Cerrar Session</Link>
+                {this.state.user?this.exists():this.noExists()}
             </div>
-            
         )
     }
 }

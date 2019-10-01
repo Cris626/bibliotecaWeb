@@ -148,6 +148,7 @@ export class Login extends React.Component{
         }
         if(flag===1){
             localStorage.setItem("User",`${this.state.user}`);
+            localStorage.setItem("Pass",`${this.state.pass}`);
             this.setState({test: true})
             console.log(this.state.login)
             alert("Usuario Correcto")
@@ -158,16 +159,25 @@ export class Login extends React.Component{
     }
 
     writeData(userId, name, email, imageUrl){
-        localStorage.setItem("id", userId);
-        localStorage.setItem("emailUser", email);
-        console.log(imageUrl);
+        localStorage.setItem("userEmail",userId);
+        localStorage.setItem("User",name); 
+        this.setState({test: true})
+        console.log(this.state.test);
         myFirestore.collection('users').doc(userId)
         .set({
             id: userId,
             nameUser: name,
             emailUser: email,
-            pictureUser: imageUrl
+            pictureUser: imageUrl,
+            bloq: false,
+            address: '',
+            ci: '',
+            city: '',
+            dateNac: '',
+            phone: '',
+            edit: false,
         })
+        this.setState({test: true})
     }
 
     myFunction(){
@@ -209,13 +219,13 @@ export class Login extends React.Component{
                                 onClick={this.myFunction} 
                                 id="showPassword"/>
                             <label for="showPassword" id="show">Show Password</label>
+                            {/**    Ojo con el this.state.login de aca abajo */}
                             <button href={`${this.state.login}`} className="btn btn-primary btn-lg btn-block" type="submit">Login</button>
-                            <Link className="btn loginBtn loginBtn--google" id="login" onClick={this.login}>
-                                Sign in with Google
-                            </Link>
-                            <Link onClick={this.logout}>Logout</Link>
-                            <Link to="/biblioteca/create-account">Create account</Link>
+                            <Link id="registeer" className="btn btn-primary btn-lg btn-block" to="/biblioteca/create-account">Create account</Link>
                         </form>
+                        <button className="btn loginBtn loginBtn--google" onClick={this.login}>
+                                Sign in with Google
+                        </button>
                     </div>
                 </div>
                 <div className="col-lg-4"></div>
