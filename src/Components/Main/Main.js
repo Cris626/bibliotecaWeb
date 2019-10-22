@@ -22,6 +22,7 @@ export class Main extends React.Component{
             user:'',
         })
         localStorage.clear();
+        localStorage.setItem("contBloq",0)
     }
 
     noExists(){
@@ -47,10 +48,28 @@ export class Main extends React.Component{
         )
     }
 
+    super(){
+        return(
+            <div className="row">
+                <div className="col-lg-3"></div>
+                <div className="col-lg-6">
+                    <form>
+                        <h1 className="text-center" >Menu Principal AdminSuper</h1>
+                        <Link to="/biblioteca/Main/user-edit" className="btn btn-primary btn-lg btn-block">Editar Datos</Link>
+                        <Link to='/biblioteca/Main/list-Users' className="btn btn-primary btn-lg btn-block">Lista de Usuarios</Link>
+                        <Link id="x" to='/biblioteca' onClick={this.logout}>Cerrar Session</Link>    
+                        
+                    </form>
+                </div>
+                <div className="col-lg-3"></div>
+            </div>
+        )
+    }
+
     render(){
         return (
             <div>
-                {this.state.user?this.exists():this.noExists()}
+                {this.state.user==="adminSuper"?this.super():this.state.user?this.exists():this.noExists()}
             </div>
         )
     }

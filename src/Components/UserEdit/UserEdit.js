@@ -150,7 +150,7 @@ export class UserEdit extends React.Component{
                             <label for="password">Nueva Contraseña:</label>
                             <input onChange={this.updateInputNewPassword} type="password" className="form-control" id="password" placeholder="Nueva contraseña"/>
                         </div>
-                        <button id="x" className="btn btn-primary btn-lg">Registrar</button>
+                        <button id="x" className="btn btn-primary btn-lg">Aceptar</button>
                         <Link to="/biblioteca/Main" className="btn btn-primary btn-lg">Cancelar</Link>
                     </form>
                 </div>

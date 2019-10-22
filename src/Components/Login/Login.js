@@ -1,5 +1,4 @@
 import React from 'react';
-import firebase from 'firebase';
 import { myFirestore } from '../Configure/firebase';
 import { Link } from "react-router-dom";
 import './login.css'
@@ -14,11 +13,10 @@ export class Login extends React.Component{
             usuarios: {},
             contraseñas: {},
             bloqueado: {},
-            contBloq: 0,
+            contBloq: {},
+            //contBloq: localStorage.getItem("contBloq"),
             test: false,
         }
-        this.login = this.login.bind(this);
-        this.logout = this.logout.bind(this);
         this.handleChangeUser = this.handleChangeUser.bind(this);
         this.handleChangePass = this.handleChangePass.bind(this);
         this.loginForAccount = this.loginForAccount.bind(this);
@@ -37,16 +35,10 @@ export class Login extends React.Component{
         })
     }
 
-    componentWilldMount(){
-        firebase.auth().onAuthStateChanged(user =>{
-            if(this.state.user){
-                this.setState({ user: user })
-            }else{
-                this.setState({ user: null })
-            }
-        })
+    bloqueo(){
+
     }
-    
+
     componentDidMount(){
         myFirestore.collection('users').get()
         .then(doc=>
@@ -54,15 +46,18 @@ export class Login extends React.Component{
                 usuarios: doc.docs.map(elements=>elements.id)
             })
         )
-        setTimeout(this.getContraseñas,1500)
-        setTimeout(this.getBloqueados,1500)
-        setTimeout(this.consola,2000)
+        setTimeout(this.getContraseñas,1500);
+        setTimeout(this.getBloqueados,1500);
+        setTimeout(this.getContBloq,1500)
+        setTimeout(this.consola,2000);
+        console.log(this.state.contBloq)
     }
 
     consola=()=>{
         console.log(this.state.usuarios)
         console.log(this.state.contraseñas)
         console.log(this.state.bloqueado)
+        console.log(this.state.contBloq)
     }
 
     getContraseñas=()=>{
@@ -95,54 +90,66 @@ export class Login extends React.Component{
         })
     }
 
-    login(){    
-        let provider = new firebase.auth.GoogleAuthProvider()
-        firebase.auth().signInWithPopup(provider)
-        .then(result => this.writeData(result.user.uid, result.user.displayName, result.user.email, result.user.photoURL))
-        .catch(error=> alert(`Error: ${error.code}: ${error.message}`))
-    }
-
-    logout(){
-        firebase.auth().signOut()
-        .then(result=>alert(`Cerro sesion`))
-        .catch(error=>alert(`Error: ${error.code}: ${error.message}`))
+    getContBloq=()=>{
+        let cont = 0;
+        let conBloq = [];
+        while(cont<this.state.usuarios.length){
+            myFirestore.collection('users').doc(`${this.state.usuarios[cont]}`).get()
+            .then(doc=>
+                conBloq.push(doc.data().contBloq)
+            )
+            cont++;
+        }
         this.setState({
-            user:'',
-            pass: '',
-            flag: 0,
-            exist: 0,
+            contBloq: conBloq
         })
     }
 
-    loginForAccount=()=>{
+    loginForAccount=async()=>{
         let cont = 0;
         let flag = 0;
+        let contador;
+        const db = await myFirestore.collection('users').doc(`${this.state.user}`);
         while(cont < this.state.usuarios.length){
             if(this.state.usuarios[cont]===this.state.user){
-                //
+                contador = this.state.contBloq[cont]
                 if(this.state.bloqueado[cont]){
                     alert("Usuario Bloqueado: Contacte con el administrador")
                 }else{
                     if(this.state.contraseñas[cont]===this.state.pass){
-                        flag = 1
-                        //console.log(flag+"cambio")
+                        ////////////
+                        //myFirestore.collection("users").doc(`${this.state.user}`)
+                        db.update({
+                            contBloq: 0
+                        })
+                        setTimeout(flag = 1, 1500)
+                        console.log("SALIO")
+                        ////////////
                         break
                     }else{
-                        if(this.state.contBloq===3){
-                            alert(`El usuario ${this.state.user} fue bloqueado`)
-                            //  Bloquear al usuario
-                            myFirestore.collection("users").doc(`${this.state.user}`)
-                            .update({
-                                bloq: true
-                            }); 
+                        if(contador>2){
+                            //myFirestore.collection("users").doc(`${this.state.user}`)
+                            db.update({
+                                bloq: true,
+                                ////////////
+                                contBloq: 0
+                                ////////////
+                            })
                             setTimeout(this.getBloqueados,1500)
+                            setTimeout(alert(`El usuario ${this.state.user} fue bloqueado`),2000)
                             break
                         }else{
-                            this.setState({contBloq: this.state.contBloq + 1 })
+                            console.log("XXXXXXXXXXXXXX")
+                            contador ++;
+                            db.update({
+                                contBloq: contador
+                            })
+                            console.log(this.state.user)
+                            console.log(contador)
+                            //console.log("XXXXXXXXXXXXXX")
                         }
                     }
                 }
-                //
             }
             cont ++
         }
@@ -150,34 +157,19 @@ export class Login extends React.Component{
             localStorage.setItem("User",`${this.state.user}`);
             localStorage.setItem("Pass",`${this.state.pass}`);
             this.setState({test: true})
-            console.log(this.state.login)
+            //console.log(this.state.login)
             alert("Usuario Correcto")
         }else{
             alert("usuarios incorrecto")
-            console.log(this.state.login)
+            //console.log(this.state.login)
         }
     }
 
-    writeData(userId, name, email, imageUrl){
-        localStorage.setItem("userEmail",userId);
-        localStorage.setItem("User",name); 
-        this.setState({test: true})
-        console.log(this.state.test);
-        myFirestore.collection('users').doc(userId)
-        .set({
-            id: userId,
-            nameUser: name,
-            emailUser: email,
-            pictureUser: imageUrl,
-            bloq: false,
-            address: '',
-            ci: '',
-            city: '',
-            dateNac: '',
-            phone: '',
-            edit: false,
+    test(x){
+        myFirestore.collection('users').doc(`${this.state.user}`)
+        .update({
+            contBloq: x
         })
-        this.setState({test: true})
     }
 
     myFunction(){
@@ -190,45 +182,41 @@ export class Login extends React.Component{
 
     render(){
         return(
-            <div className="row">                
-                <div className="col-lg-4"></div>
-                <div className="col-lg-4">
-                    <div className="main-login">
-                        <form className="form" onSubmit={this.loginForAccount} action={this.state.test?'/biblioteca/Main':'/biblioteca'}>
-                            <h1 className="text-center">Welcome</h1>	
-                            <label id="valForm">User:</label>
-                            <input 
-                                type="text" 
-                                autoComplete="off" 
-                                value={this.state.user}
-                                onChange={this.handleChangeUser}
-                                className="form-control" 
-                                placeholder="User" 
-                                required/>
-                            <label id="valForm">Password:</label>
-                            <input 
-                                type={`${this.state.showPass}`} 
-                                value={this.state.pass}
-                                onChange={this.handleChangePass}
-                                className="form-control pwd" 
-                                placeholder="Password" 
-                                id="myInput"
-                                required/>
-                            <input 
-                                type="checkbox" 
-                                onClick={this.myFunction} 
-                                id="showPassword"/>
-                            <label for="showPassword" id="show">Show Password</label>
-                            {/**    Ojo con el this.state.login de aca abajo */}
-                            <button href={`${this.state.login}`} className="btn btn-primary btn-lg btn-block" type="submit">Login</button>
-                            <Link id="registeer" className="btn btn-primary btn-lg btn-block" to="/biblioteca/create-account">Create account</Link>
-                        </form>
-                        <button className="btn loginBtn loginBtn--google" onClick={this.login}>
-                                Sign in with Google
-                        </button>
-                    </div>
+            <div className="row">
+            <div className="col-lg-4"></div>
+            <div className="col-lg-4">
+                <div className="main-login">
+                    <form className="form" onSubmit={this.loginForAccount} action={this.state.test?'/biblioteca/Main':'/biblioteca'}>
+                        <h1 className="text-center">Bienvenido</h1>	
+                        <label id="valForm">Usuario:</label>
+                        <input 
+                            type="text" 
+                            autoComplete="off" 
+                            value={this.state.user}
+                            onChange={this.handleChangeUser}
+                            className="form-control" 
+                            placeholder="Usuario" 
+                            required/>
+                        <label id="valForm">Contraseña:</label>
+                        <input 
+                            type={`${this.state.showPass}`} 
+                            value={this.state.pass}
+                            onChange={this.handleChangePass}
+                            className="form-control pwd" 
+                            placeholder="Contraseña" 
+                            id="myInput"
+                            required/>
+                        <input 
+                            type="checkbox" 
+                            onClick={this.myFunction} 
+                            id="showPassword"/>
+                        <label for="showPassword" id="show">Show Password</label>
+                        <button className="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+                        <Link id="registeer" className="btn btn-primary btn-lg btn-block" to="/biblioteca/create-account">Create account</Link>
+                    </form>
                 </div>
-                <div className="col-lg-4"></div>
+            </div>
+            <div className="col-lg-4"></div>
             </div>
         )
     }

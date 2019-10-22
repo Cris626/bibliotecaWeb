@@ -123,6 +123,11 @@ export class CreateAccount extends React.Component{
         }
     }
 
+    soloNumeros(e){
+        var key = e.charCode;
+        return key >= 48 && key <= 57;
+    }
+
     render(){
         return (
             <div className="row">
@@ -132,7 +137,7 @@ export class CreateAccount extends React.Component{
                         <h1>Registrar Usuario</h1>
                         <div className="form-group">
                             <label for="firtsName">Nombre completo:</label>
-                            <input onChange={this.updateInputName} value={this.state.nameComplet} type="text" className="form-control" id="firtsName" placeholder="Nombre Completo" required/>
+                            <input onChange={this.updateInputName} value={this.state.nameComplet} type="text" className="form-control" id="firtsName" name="firtsName" placeholder="Nombre Completo" required />
                         </div>
                         <div className="form-group">
                             <label for="ci">Carnet de identidad:</label>
@@ -140,11 +145,11 @@ export class CreateAccount extends React.Component{
                         </div>
                         <div className="form-group">
                             <label>Fecha nacimiento:</label>
-                            <input onChange={this.updateInputNac} value={this.state.dateNac} type="date" className="form-control" required/>
+                            <input onChange={this.updateInputNac} value={this.state.dateNac} type="date" max="2019-10-01" min="1940-01-01" className="form-control" required/>
                         </div>
                         <div className="form-group">
                             <label for="Phone">Telefono:</label>
-                            <input onChange={this.updateInputPhone} value={this.state.phone} type="text" className="form-control" id="Phone" placeholder="Telefono" required/>
+                            <input maxlength="8" onChange={this.updateInputPhone} value={this.state.phone} type="text" className="form-control" id="Phone" placeholder="Telefono" required/>
                         </div>
                         <div className="form-group">
                             <label for="city">Ciudad:</label>
