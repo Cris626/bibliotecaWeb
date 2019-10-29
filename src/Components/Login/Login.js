@@ -14,7 +14,6 @@ export class Login extends React.Component{
             contraseñas: {},
             bloqueado: {},
             contBloq: {},
-            //contBloq: localStorage.getItem("contBloq"),
             test: false,
         }
         this.handleChangeUser = this.handleChangeUser.bind(this);
@@ -33,10 +32,6 @@ export class Login extends React.Component{
         this.setState({
             pass: e.target.value
         })
-    }
-
-    bloqueo(){
-
     }
 
     componentDidMount(){
@@ -117,23 +112,17 @@ export class Login extends React.Component{
                     alert("Usuario Bloqueado: Contacte con el administrador")
                 }else{
                     if(this.state.contraseñas[cont]===this.state.pass){
-                        ////////////
-                        //myFirestore.collection("users").doc(`${this.state.user}`)
                         db.update({
                             contBloq: 0
                         })
                         setTimeout(flag = 1, 1500)
                         console.log("SALIO")
-                        ////////////
                         break
                     }else{
                         if(contador>2){
-                            //myFirestore.collection("users").doc(`${this.state.user}`)
                             db.update({
                                 bloq: true,
-                                ////////////
                                 contBloq: 0
-                                ////////////
                             })
                             setTimeout(this.getBloqueados,1500)
                             setTimeout(alert(`El usuario ${this.state.user} fue bloqueado`),2000)
@@ -146,7 +135,6 @@ export class Login extends React.Component{
                             })
                             console.log(this.state.user)
                             console.log(contador)
-                            //console.log("XXXXXXXXXXXXXX")
                         }
                     }
                 }
@@ -156,12 +144,11 @@ export class Login extends React.Component{
         if(flag===1){
             localStorage.setItem("User",`${this.state.user}`);
             localStorage.setItem("Pass",`${this.state.pass}`);
+            localStorage.setItem("Numero", "1")
             this.setState({test: true})
-            //console.log(this.state.login)
             alert("Usuario Correcto")
         }else{
             alert("usuarios incorrecto")
-            //console.log(this.state.login)
         }
     }
 
