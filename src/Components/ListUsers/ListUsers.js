@@ -127,6 +127,7 @@ export class ListUsers extends React.Component{
                             )): null}
                         </tbody>
                     </table>
+                    <Link className="btn btn-primary btn-lg" to="/biblioteca/Main">Atras</Link>
                 </div>
                 <div className="col-lg-2"></div>
             </div>

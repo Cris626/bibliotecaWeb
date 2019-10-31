@@ -186,7 +186,7 @@ export class UserEdit extends React.Component{
             <div className="row">
                 <div className="col-lg-3"></div>
                 <div className="col-lg-6">
-                    <form action='/biblioteca/Main'>
+                    <form action='/biblioteca/Main/view-Users'>
                         <h1 className="text-center" >Editar Datos</h1>
                         <div className="form-group">
                             <label for="firtsName">Nombre completo:</label>
@@ -228,7 +228,7 @@ export class UserEdit extends React.Component{
                             <input  autoComplete="off" onChange={this.updateInputNewPassword} type="password" className="form-control" id="password" placeholder="Nueva contraseña"/>
                         </div>
                         <button onClick={localStorage.setItem("Numero", "1")} id="x" className="btn btn-primary btn-lg">Aceptar</button>
-                        <Link onClick={localStorage.setItem("Numero", "1")} to="/biblioteca/Main" className="btn btn-primary btn-lg">Cancelar</Link>
+                        <Link onClick={localStorage.setItem("Numero", "1")} to="/biblioteca/Main/view-Users" className="btn btn-primary btn-lg">Cancelar</Link>
                     </form>
                 </div>
                 <div className="col-lg-3"></div>

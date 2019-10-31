@@ -197,7 +197,7 @@ export class Login extends React.Component{
                             type="checkbox" 
                             onClick={this.myFunction} 
                             id="showPassword"/>
-                        <label for="showPassword" id="show">Show Password</label>
+                        <label for="showPassword" className="show">Mostrar contraseña</label>
                         <button className="btn btn-primary btn-lg btn-block" type="submit">Login</button>
                         <Link id="registeer" className="btn btn-primary btn-lg btn-block" to="/biblioteca/create-account">Create account</Link>
                     </form>
