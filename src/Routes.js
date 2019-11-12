@@ -10,6 +10,7 @@ import {useListBooks} from './Components/books/listBooks';
 import {useView} from './Components/UserView/UserView';
 import { useRegisterBooks } from "./Components/books/registerBooks";
 import { useEditBooks } from "./Components/books/editBooks";
+import { useReservedBooks } from "./Components/books/reservedBooks";
 
 const Routes = () =>{
     return(
@@ -24,6 +25,7 @@ const Routes = () =>{
                 <Route exact path='/biblioteca/Main/books' component={useListBooks} />
                 <Route exact path='/biblioteca/Main/books/Register' component={useRegisterBooks} />
                 <Route exact path='/biblioteca/Main/books/Edit' component={useEditBooks} />
+                <Route exact path='/biblioteca/Main/books/Reserved' component={useReservedBooks} />
                 {/*<Route exact path='/' component={useLogin} />*/}
             </div>
         </Switch>

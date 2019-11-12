@@ -135,8 +135,8 @@ export function useEditBooks() {
                     <label for="user">Pais:</label>
                     <input onChange={updateInputPais} value={pais} type="text" className="form-control" id="user" placeholder="Pais Autor" autoComplete="off" required/>
                 </div>
-                <a href="/biblioteca/Main/books"><button onClick={()=>deleteDate()} className="btn btn-primary btn-lg">Cancelar</button></a>
-                <a href="/biblioteca/Main/books"><button id="registerBto" onClick={()=>{alert("Se edito con exito")}} className="btn btn-primary btn-lg">Editar</button></a>
+                <a href="/biblioteca/Main/books"><button onClick={()=>deleteDate()} className="btn btn-dark btn-lg">Cancelar</button></a>
+                <a href="/biblioteca/Main/books"><button id="registerBto" onClick={()=>{alert("Se edito con exito")}} className="btn btn-dark btn-lg">Editar</button></a>
             </div>
         )
     }

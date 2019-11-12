@@ -64,9 +64,9 @@ export class ListUsers extends React.Component{
     listUser(){
         const { items } = this.state;
         return(
-            <div className="row">
+            <div className="row ">
                 <div className="col-lg-2"></div>
-                <div className="col-lg-8">
+                <div className="col-lg-8 main">
                     <h1 className="text-center" >Listar Usuarios</h1>
                     <table class="table">
                         <thead>
