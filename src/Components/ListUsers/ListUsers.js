@@ -26,19 +26,6 @@ export class ListUsers extends React.Component{
                 })
             })
         })
-        /*.then(snapShots=>{            
-            this.setState({
-                items: snapShots.docs.map(doc=>{
-                    return {
-                        data: doc.data(),
-                        nameComplet: doc.data().nameComplet,
-                        bloq: doc.data().bloq
-                    }
-                })
-            })
-        },error=>{
-            console.log(error)
-        })*/
     }
 
     editUser=(id)=>{
@@ -86,7 +73,6 @@ export class ListUsers extends React.Component{
                             <tr>
                             <th style={{textAlign: "center"}} scope="col">Usuario</th>
                             <th style={{textAlign: "center"}} scope="col">Nombre</th>
-                            <th style={{textAlign: "center"}} scope="col">Editar</th>
                             <th style={{textAlign: "center"}} scope="col">Ver</th>
                             <th style={{textAlign: "center"}} scope="col">Bloqueado</th>
                             </tr>
@@ -96,14 +82,7 @@ export class ListUsers extends React.Component{
                                 <tr key={key}>
                                     <td>{item.data.user}</td>
                                     <td>{item.data.nameComplet}</td>
-                                    <td style={{textAlign: "center"}}>
-                                        <Link 
-                                            to="/biblioteca/Main/user-edit" 
-                                            type="button" 
-                                            class="btn btn-primary" 
-                                            onClick={()=>this.editUser(item.data.user)}
-                                        >Editar</Link>
-                                    </td>
+                                    
                                     <td style={{textAlign: "center"}}>
                                         <Link 
                                             to="/biblioteca/Main/view-Users" 

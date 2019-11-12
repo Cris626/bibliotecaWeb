@@ -1,0 +1,25 @@
+div .main{
+    border-radius: 10px;
+    background-color: #d9d6cf;
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#register{
+    float: right;
+    position: relative;
+    right: 10px;
+    bottom: 10px;
+}
+
+#registerBto{
+    position: relative;
+    left: 479px;
+}
+
+#back{
+    position: relative;
+    left: 10px;
+    bottom: 10px;
+}

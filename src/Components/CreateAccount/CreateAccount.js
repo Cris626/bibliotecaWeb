@@ -137,38 +137,31 @@ export class CreateAccount extends React.Component{
                         <h1>Registrar Usuario</h1>
                         <div className="form-group">
                             <label for="firtsName">Nombre completo:</label>
-                            <input onChange={this.updateInputName} value={this.state.nameComplet} type="text" className="form-control" id="firtsName" name="firtsName" placeholder="Nombre Completo" required />
+                            <input onChange={this.updateInputName} value={this.state.nameComplet} type="text" className="form-control" id="firtsName" name="firtsName" placeholder="Nombre Completo" required autoComplete="off"/>
                         </div>
                         <div className="form-group">
                             <label for="ci">Carnet de identidad:</label>
-                            <input onChange={this.updateInputCi} value={this.state.ci} type="text" className="form-control" id="ci" placeholder="Carnet de Identidad" required/>
+                            <input onChange={this.updateInputCi} value={this.state.ci} type="text" className="form-control" id="ci" placeholder="Carnet de Identidad" autoComplete="off" required/>
                         </div>
                         <div className="form-group">
                             <label>Fecha nacimiento:</label>
-                            <input onChange={this.updateInputNac} value={this.state.dateNac} type="date" max="2019-10-01" min="1940-01-01" className="form-control" required/>
+                            <input onChange={this.updateInputNac} value={this.state.dateNac} type="date" max="2019-10-01" min="1940-01-01" className="form-control" autoComplete="off" required/>
                         </div>
                         <div className="form-group">
                             <label for="Phone">Telefono:</label>
-                            <input maxlength="8" onChange={this.updateInputPhone} value={this.state.phone} type="text" className="form-control" id="Phone" placeholder="Telefono" required/>
+                            <input maxlength="8" onChange={this.updateInputPhone} value={this.state.phone} type="text" className="form-control" id="Phone" placeholder="Telefono" autoComplete="off" required/>
                         </div>
                         <div className="form-group">
                             <label for="city">Ciudad:</label>
-                            <input onChange={this.updateInputCity} value={this.state.city} type="text" className="form-control" id="city" placeholder="Ciudad" required/>
+                            <input onChange={this.updateInputCity} value={this.state.city} type="text" className="form-control" id="city" placeholder="Ciudad" autoComplete="off" required/>
                         </div>
                         <div className="form-group">
                             <label for="address">Direccion:</label>
-                            <input onChange={this.updateInputAddress} value={this.state.address} type="text" className="form-control" id="address" placeholder="Direccion" required/>
+                            <input onChange={this.updateInputAddress} value={this.state.address} type="text" className="form-control" id="address" placeholder="Direccion" autoComplete="off" required/>
                         </div>
-                        {/*<div className="form-group">
-                            <label>Cargo:</label>
-                            <select className="form-control form-control-lg">
-                            <option>Estudiante</option>
-                            <option>Docente</option>
-                            </select>
-                        </div>*/}
                         <div className="form-group">
                             <label for="user">Usuario:</label>
-                            <input onChange={this.updateInputUser} value={this.state.user} type="text" className="form-control" id="user" placeholder="Usuario" required/>
+                            <input onChange={this.updateInputUser} value={this.state.user} type="text" className="form-control" id="user" placeholder="Usuario" autoComplete="off" required/>
                         </div>
                         <div className="form-group">
                             <label for="password">Contraseña:</label>

@@ -57,6 +57,7 @@ export class Main extends React.Component{
                         <h1 className="text-center" >Menu Principal AdminSuper</h1>
                         <Link to="/biblioteca/Main/user-edit" className="btn btn-primary btn-lg btn-block">Editar Datos</Link>
                         <Link to='/biblioteca/Main/list-Users' className="btn btn-primary btn-lg btn-block">Lista de Usuarios</Link>
+                        <Link to='/biblioteca/Main/books' className="btn btn-primary btn-lg btn-block">Libros</Link>
                         <Link id="x" to='/biblioteca' onClick={this.logout}>Cerrar Session</Link>    
                         
                     </form>
