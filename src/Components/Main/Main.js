@@ -59,6 +59,7 @@ export class Main extends React.Component{
                         <Link to="/biblioteca/Main/user-edit" className="btn btn-primary btn-lg btn-block">Editar Datos</Link>
                         <Link to='/biblioteca/Main/list-Users' className="btn btn-primary btn-lg btn-block">Lista de Usuarios</Link>
                         <Link to='/biblioteca/Main/books' className="btn btn-primary btn-lg btn-block">Libros</Link>
+                        <Link to='/biblioteca/Main/list-reserved' className="btn btn-primary btn-lg btn-block">Reservados</Link>
                         <Link id="x" to='/biblioteca' onClick={this.logout}>Cerrar Session</Link>    
                         
                     </form>

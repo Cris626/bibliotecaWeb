@@ -80,8 +80,8 @@ export class ListUsers extends React.Component{
                         <tbody>
                             { items && items!== undefined? items.map((item, key) =>(
                                 <tr key={key}>
-                                    <td>{item.data.user}</td>
-                                    <td>{item.data.nameComplet}</td>
+                                    <td style={{textAlign: "center"}}>{item.data.user}</td>
+                                    <td style={{textAlign: "center"}}>{item.data.nameComplet}</td>
                                     
                                     <td style={{textAlign: "center"}}>
                                         <Link 
