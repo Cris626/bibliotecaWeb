@@ -116,7 +116,7 @@ export function useMyReserved() {
                     <h1 style={{textAlign:"center"}}>Libros Reservados</h1>
                     {/*<button onClick={()=>console.log(books.items.map((items)=>items.id))}>click</button>*/}
                     <div class="input-group">
-                        <input onChange={search} placeholder="Buscar libro por" type="text" className="form-control" aria-label="Text input with dropdown button"/>
+                        <input onChange={search} placeholder="Buscar libro reservado por" type="text" className="form-control" aria-label="Text input with dropdown button"/>
                         <div className="input-group-append">
                             <select onChange={test} className="btn btn-dark dropdown-toggle">
                                 <option>Codigo</option>
