@@ -118,7 +118,7 @@ export function useRegisterBooks(){
                     <input onChange={updateInputPais} value={pais} type="text" className="form-control" id="user" placeholder="Pais Autor" autoComplete="off" required/>
                 </div>
                 <a href="/biblioteca/Main/books"><button className="btn btn-dark btn-lg">Cancelar</button></a>
-                <button id="registerBto" onClick={registro} className="btn btn-dark btn-lg">Registrar</button>
+                <button style={{float:"right"}} onClick={registro} className="btn btn-dark btn-lg">Registrar</button>
             </div>
         )
         

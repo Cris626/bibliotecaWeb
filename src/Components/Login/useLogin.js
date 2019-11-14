@@ -7,8 +7,9 @@ import './login.css'
 export function useLogin(){
     const [usuario, setUsuario] = useState()
     const [contraseña, setContraseña] = useState()
-    const [bandera, setBandera] = useState()
+    const [bandera, setBandera] = useState(false)
     const [password, setPassword] = useState("password")
+    const [direccion, setDireccion] = useState("/")
     let contador
 
     function handleChangeUser(e){
@@ -19,12 +20,23 @@ export function useLogin(){
         setContraseña(e.target.value)
     }
 
+    useEffect(()=>{
+        if(bandera!==false)
+            {setDireccion("/biblioteca/Main")
+            console.log(direccion)}
+        else{
+            setDireccion("/")
+            console.log(direccion)
+        }
+    })
+
     function okey(){
         const db = myFirestore.collection('users').doc(`${usuario}`);
         db.update({
             contBloq: 0
         })
         setBandera(true)
+        //setDireccion("/biblioteca/Main")
         alert("Bienvenido")
     }
 
@@ -71,7 +83,7 @@ export function useLogin(){
         <div className="col-lg-4"></div>
         <div className="col-lg-4">
             <div className="main-login">
-                <form className="form" onSubmit={validation} action={bandera?'/biblioteca/Main':'/'}>
+                <div className="form">
                 <h1 className="text-center">Bienvenido</h1>	
                     <label id="valForm">Usuario: </label>
                     <input 
@@ -99,14 +111,14 @@ export function useLogin(){
                         id="showPassword"
                     />
                     <label for="showPassword" id="show">Mostar Contraseña</label>
-                    <button>ACEPTAR</button>
-                </form>
+                    <a href={()=>bandera?`${direccion}`:`${direccion}`}><button onClick={validation}>Iniciar Sesion</button></a>
+                    <Link to={()=>bandera?`${direccion}`:`${direccion}`} onClick={validation}>Login</Link>
+                </div>
                 <button onClick={validation} className="btn btn-primary btn-lg btn-block" type="submit">Iniciar Sesion</button>
-                    <Link id="registeer" className="btn btn-primary btn-lg btn-block" to="/biblioteca/create-account">Crear cuenta</Link>
+                <Link id="registeer" className="btn btn-primary btn-lg btn-block" to="/biblioteca/create-account">Crear cuenta</Link>
             </div>
         </div>
         <div className="col-lg-4"></div>
         </div>
     )
-}
-*/
+}*/
