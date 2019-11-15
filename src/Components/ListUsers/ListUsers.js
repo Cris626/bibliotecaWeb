@@ -43,7 +43,6 @@ export class ListUsers extends React.Component{
     }
 
     bloquear(user){
-
         myFirestore.collection('users').doc(`${user}`)
         .update({
             bloq: true
@@ -53,7 +52,8 @@ export class ListUsers extends React.Component{
     desBloquear(user){
         myFirestore.collection('users').doc(`${user}`)
         .update({
-            bloq: false
+            bloq: false,
+            contBloq: 0
         })
     }
 

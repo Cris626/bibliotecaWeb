@@ -177,7 +177,7 @@ export class CreateAccount extends React.Component{
                             </label>
                         </div>
                         <button id="x" className="btn btn-primary btn-lg">Registrar</button>
-                        <Link to="/biblioteca" className="btn btn-primary btn-lg">Cancelar</Link>
+                        <Link to="/" className="btn btn-primary btn-lg">Cancelar</Link>
                     </form>
                 </div>
                 <div className="col-lg-3"></div>
