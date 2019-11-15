@@ -245,11 +245,11 @@ export class UserEdit extends React.Component{
                         <h1 className="text-center" >Editar Datos</h1>
                         <div className="form-group">
                             <label for="firtsName">Nombre completo:</label>
-                            <input autoComplete="off"  value={this.state.nameComplet} onChange={this.handleChange} type="text" className="form-control" id="firtsName" placeholder="Nombre Completo" required disabled/>
+                            <input autoComplete="off"  value={this.state.nameComplet} onChange={this.handleChange} type="text" className="form-control" id="firtsName" placeholder="Nombre Completo" required />
                         </div>
                         <div className="form-group">
                             <label for="ci">Carnet de identidad:</label>
-                            <input onChange={this.updateInputCi} value={this.state.ci} type="text" className="form-control" id="ci" placeholder="Carnet de Identidad" required disabled/>
+                            <input onChange={this.updateInputCi} value={this.state.ci} type="text" className="form-control" id="ci" placeholder="Carnet de Identidad" required />
                         </div>
                         <div className="form-group">
                             <label>Fecha nacimiento:</label>
