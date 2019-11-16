@@ -12,16 +12,30 @@ export function useMyReserved() {
 
     
     function bloquear(user){
+        limitePrestamo(user)
         myFirestore.collection('reserved').doc(`${user}`)
         .update({
-            entregado: true
+            entregado: true,
+            color: 'green'
+        })
+    }
+
+    function limitePrestamo(user) {
+        let date = new Date();
+        let fechaLimite = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()+3}`
+        let horaLimite = `${date.getHours()}:${date.getMinutes()}`
+        myFirestore.collection('reserved').doc(`${user}`)
+        .update({
+            fechaLimite: fechaLimite,
+            horaLimite : horaLimite
         })
     }
 
     function desBloquear(user){
         myFirestore.collection('reserved').doc(`${user}`)
         .update({
-            entregado: false
+            entregado: false,
+            color: 'red'
         })
     }
 
@@ -57,6 +71,7 @@ export function useMyReserved() {
                         <th style={{textAlign: "center"}} scope="col">Reserva</th>
                         <th style={{textAlign: "center"}} scope="col">Expira reserva</th>
                         <th style={{textAlign: "center"}} scope="col">Estado</th>
+                        <th style={{textAlign: "center"}} scope="col">Limite de entrega</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -82,6 +97,7 @@ export function useMyReserved() {
                                     </label>
                                 </div>}
                             </td>
+                            <td style={{textAlign: "center", color: `${items.data.color}`}}>{items.data.fechaLimite} {items.data.horaLimite}</td>
                         </tr>:null
                         )):null}
                     </tbody>
@@ -138,7 +154,9 @@ export function useMyReserved() {
                             <th style={{textAlign: "center"}} scope="col">Seccion</th>
                             <th style={{textAlign: "center"}} scope="col">Lector</th>
                             <th style={{textAlign: "center"}} scope="col">CI</th>
+                            <th style={{textAlign: "center"}} scope="col">Reserva</th>
                             <th style={{textAlign: "center"}} scope="col">Estado</th>
+                            <th style={{textAlign: "center"}} scope="col">Fecha limite</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -150,6 +168,7 @@ export function useMyReserved() {
                                 <td style={{textAlign: "center"}}>{items.data.seccion}</td>
                                 <td style={{textAlign: "center"}}>{items.data.lector}</td>
                                 <td style={{textAlign: "center"}}>{items.data.ci}</td>
+                                <td style={{textAlign: "center"}}>{items.data.fechaReserva} {items.data.horaReserva}</td>
                                 <td style={{textAlign: "center"}}>
                                     {<div class="ui toggle checkbox">
                                         <label class="switch">
@@ -161,6 +180,7 @@ export function useMyReserved() {
                                         </label>
                                     </div>}
                                 </td>
+                                <td style={{textAlign: "center", color: `${items.data.color}`}}>{items.data.fechaLimite} {items.data.horaLimite}</td>
                             </tr>
                             )):null}
                         </tbody>
@@ -192,7 +212,9 @@ export function useMyReserved() {
                             <th style={{textAlign: "center"}} scope="col">Seccion</th>
                             <th style={{textAlign: "center"}} scope="col">Lector</th>
                             <th style={{textAlign: "center"}} scope="col">CI</th>
+                            <th style={{textAlign: "center"}} scope="col">Reserva</th>
                             <th style={{textAlign: "center"}} scope="col">Estado</th>
+                            <th style={{textAlign: "center"}} scope="col">Fecha limite</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -206,6 +228,7 @@ export function useMyReserved() {
                                 <td style={{textAlign: "center"}}>{items.data.seccion}</td>
                                 <td style={{textAlign: "center"}}>{items.data.lector}</td>
                                 <td style={{textAlign: "center"}}>{items.data.ci}</td>
+                                <td style={{textAlign: "center"}}>{items.data.fechaReserva} {items.data.horaReserva}</td>
                                 <td style={{textAlign: "center"}}>
                                     {<div class="ui toggle checkbox">
                                         <label class="switch">
@@ -217,6 +240,7 @@ export function useMyReserved() {
                                         </label>
                                     </div>}
                                 </td>
+                                <td style={{textAlign: "center", color: `${items.data.color}`}}>{items.data.fechaLimite} {items.data.horaLimite}</td>
                             </tr>:null:busqPor==="lector"?
                             items.data.lector.indexOf(`${lyrics}`)!==-1?
                             <tr>
@@ -226,6 +250,7 @@ export function useMyReserved() {
                                 <td style={{textAlign: "center"}}>{items.data.seccion}</td>
                                 <td style={{textAlign: "center"}}>{items.data.lector}</td>
                                 <td style={{textAlign: "center"}}>{items.data.ci}</td>
+                                <td style={{textAlign: "center"}}>{items.data.fechaReserva} {items.data.horaReserva}</td>
                                 <td style={{textAlign: "center"}}>
                                     {<div class="ui toggle checkbox">
                                         <label class="switch">
@@ -237,6 +262,7 @@ export function useMyReserved() {
                                         </label>
                                     </div>}
                                 </td>
+                                <td style={{textAlign: "center", color: `${items.data.color}`}}>{items.data.fechaLimite} {items.data.horaLimite}</td>
                             </tr>:null:busqPor==="ci"?
                             items.data.ci.indexOf(`${lyrics}`)!==-1?
                             <tr>
@@ -246,6 +272,7 @@ export function useMyReserved() {
                                 <td style={{textAlign: "center"}}>{items.data.seccion}</td>
                                 <td style={{textAlign: "center"}}>{items.data.lector}</td>
                                 <td style={{textAlign: "center"}}>{items.data.ci}</td>
+                                <td style={{textAlign: "center"}}>{items.data.fechaReserva} {items.data.horaReserva}</td>
                                 <td style={{textAlign: "center"}}>
                                     {<div class="ui toggle checkbox">
                                         <label class="switch">
@@ -257,6 +284,7 @@ export function useMyReserved() {
                                         </label>
                                     </div>}
                                 </td>
+                                <td style={{textAlign: "center", color: `${items.data.color}`}}>{items.data.fechaLimite} {items.data.horaLimite}</td>
                             </tr>:null:null
                             )):null}
                         </tbody>
@@ -276,12 +304,12 @@ export function useMyReserved() {
 
     return(
         <div className="row">
-            <div className="col-lg-2"></div>
-            <div className="col-lg-8">
+            <div className="col-lg-1"></div>
+            <div className="col-lg-10">
                 {/*localStorage.getItem("User")==="adminSuper"?libBooks():noExists()*/}
                 {localStorage.getItem("User")==="adminSuper"?reservedBooks():localStorage.getItem("User")?resBooksUser():noExists()}
             </div>
-            <div className="col-lg-2"></div>
+            <div className="col-lg-1"></div>
         </div>
     )
 }
