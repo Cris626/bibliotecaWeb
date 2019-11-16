@@ -96,7 +96,7 @@ export function useReservedBooks() {
                     <h4 style={{ marginLeft: "84px" }}>{lector}</h4>
                     <h3>CI: </h3>
                     <h4 style={{ marginLeft: "32px" }}>{ci}</h4>
-                    <h3>Fecha limite: </h3>
+                    <h3>Fecha limite de efectuar el retiro: </h3>
                     <h4 style={{ marginLeft: "154px" }}>{hour}{horario} {dateE}</h4>
                     <h3>Usuario: </h3>
                     <h4 style={{ marginLeft: "102px" }}>{codLector}</h4>
