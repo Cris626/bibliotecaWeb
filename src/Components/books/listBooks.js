@@ -25,6 +25,15 @@ export function useListBooks() {
     },[])
 
     function guardar(idLib, idAu) {
+        let date = new Date();
+        if(date.getHours()>12){
+            localStorage.setItem("horario", "pm")
+        }else{
+            localStorage.setItem("horario", "am")
+        }
+        localStorage.setItem("fechaReserva", `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`)
+        localStorage.setItem("hora", `${date.getHours()}:${date.getMinutes()}`)
+        localStorage.setItem("fechaExpira", `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()+1}`)
         localStorage.setItem("idLibro",idLib)
         localStorage.setItem("idAutor",idAu)
     }

@@ -227,7 +227,7 @@ export class UserEdit extends React.Component{
                             <label for="password">Nueva Contraseña:</label>
                             <input  autoComplete="off" onChange={this.updateInputNewPassword} type="password" className="form-control" id="password" placeholder="Nueva contraseña"/>
                         </div>
-                        <button onClick={localStorage.setItem("Numero", "1")} id="x" className="btn btn-primary btn-lg">Aceptar</button>
+                        <button onClick={localStorage.setItem("Numero", "1"),()=> alert("Se edito con exito")} id="x" className="btn btn-primary btn-lg">Aceptar</button>
                         <Link onClick={localStorage.setItem("Numero", "1")} to="/biblioteca/Main/view-Users" className="btn btn-primary btn-lg">Cancelar</Link>
                     </form>
                 </div>
@@ -282,7 +282,7 @@ export class UserEdit extends React.Component{
                             <label for="password">Nueva Contraseña:</label>
                             <input  autoComplete="off" onChange={this.updateInputNewPassword} type="password" className="form-control" id="password" placeholder="Nueva contraseña"/>
                         </div>
-                        <button onClick={localStorage.setItem("Numero", "1")} id="x" className="btn btn-primary btn-lg">Aceptar</button>
+                        <button onClick={localStorage.setItem("Numero", "1"),()=> alert("Se edito con exito")} id="x" className="btn btn-primary btn-lg">Aceptar</button>
                         <Link onClick={localStorage.setItem("Numero", "1")} to="/biblioteca/Main" className="btn btn-primary btn-lg">Cancelar</Link>
                     </form>
                 </div>

@@ -105,7 +105,7 @@ export function useLogin(){
 
     function existUser() {
         let cont = 0;
-        while(cont<4){
+        while(cont<usuarios.items.length){
             if(usuarios.items[cont]===usuario){
                 setFlag(false)
                 validation()

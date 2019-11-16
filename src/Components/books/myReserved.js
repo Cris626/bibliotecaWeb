@@ -52,8 +52,10 @@ export function useMyReserved() {
                         <th style={{textAlign: "center"}} scope="col">Titulo</th>
                         <th style={{textAlign: "center"}} scope="col">Autor</th>
                         <th style={{textAlign: "center"}} scope="col">Seccion</th>
-                        <th style={{textAlign: "center"}} scope="col">Lector</th>
-                        <th style={{textAlign: "center"}} scope="col">CI</th>
+                        {/*<th style={{textAlign: "center"}} scope="col">Lector</th>
+                        <th style={{textAlign: "center"}} scope="col">CI</th>*/}
+                        <th style={{textAlign: "center"}} scope="col">Reserva</th>
+                        <th style={{textAlign: "center"}} scope="col">Expira reserva</th>
                         <th style={{textAlign: "center"}} scope="col">Estado</th>
                         </tr>
                     </thead>
@@ -65,8 +67,10 @@ export function useMyReserved() {
                             <td style={{textAlign: "center"}}>{items.data.titulo}</td>
                             <td style={{textAlign: "center"}}>{items.data.autor}</td>
                             <td style={{textAlign: "center"}}>{items.data.seccion}</td>
-                            <td style={{textAlign: "center"}}>{items.data.lector}</td>
-                            <td style={{textAlign: "center"}}>{items.data.ci}</td>
+                            {/*<td style={{textAlign: "center"}}>{items.data.lector}</td>
+                            <td style={{textAlign: "center"}}>{items.data.ci}</td>*/}
+                            <td style={{textAlign: "center"}}>{items.data.fechaReserva} {items.data.horaReserva}</td>
+                            <td style={{textAlign: "center"}}>{items.data.fechaExpira} {items.data.horaReserva}</td>
                             <td style={{textAlign: "center"}}>
                                 {<div class="ui toggle checkbox">
                                     <label class="switch">
